@@ -13,31 +13,22 @@ const initdb = async () =>
   });
 
 export const putDb = async (content) => {
-  try {
-    const todosDb = await openDB('jate', 1);
-    const tx = todosDb.transaction('jate', 'readwrite');
-    const store = tx.objectStore('jate');
-    const request = store.put({ id: id, text: content });
-    const result = await request;
-    console.log('Data saved to the database', result);
-  } catch (err) {
-    console.error(err);
-  }
-
+  const todosDb = await openDB('jate', 1);
+  const tx = todosDb.transaction('jate', 'readwrite');
+  const store = tx.objectStore('jate');
+  const request = store.put({ text: content });
+  const result = await request;
+  console.log('Data saved to the database', result);
 }
 
 export const getDb = async () => {
-  try {
-    const todosDb = await openDB('jate', 1);
-    const tx = todosDb.transaction('jate', 'readonly');
-    const store = tx.objectStore('jate');
-    const request = store.getAll();
-    const result = await request;
-    console.log('result.value', result);
-    return result;
-  } catch (err) {
-    console.error(err);
-  }
+  const textDB = await openDB('jate', 1);
+  const tx = textDB.transaction('jate', 'readonly');
+  const store = tx.objectStore('jate');
+  const request = store.getAll();
+  const result = await request;
+  console.log('result.value', result);
+  return result;
 }
 
 initdb();
